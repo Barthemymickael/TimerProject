@@ -1,16 +1,55 @@
 import 'package:flutter/material.dart';
+import 'dart:developer';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:timer/components/TimersList.dart';
+import 'package:timer/components/UsersList.dart';
+import 'package:flutter/rendering.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:timer/routes/AppRouter.dart';
+/*
 void main() {
   runApp(const MyApp());
-}
+}*/
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  const config = FirebaseOptions(
+      apiKey: "AIzaSyDdKeyBpLjNC3kcuWBA0q71pb5_6H_-kVA",
+      appId: "1:61739335634:web:97eca1c57e6b3dd3abd20b",
+      messagingSenderId: "388890135059",
+      projectId: "test-22f99"
+  );
+  /*Future<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
 
+// Ideal time to initialize
+    await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+//...
+  }*/
+  await Firebase.initializeApp(options: config);
+  checkConnection();
+  log(FirebaseDatabase.instance.toString());
+  /*Future<void> getData() async {
+    final querySnapshot = await UserCollectionReference().get();
+    final allUsers = querySnapshot.docs.map((userData) => userData.data).toList();
+    log(allUsers.toString());
+  }*/
+  //await getData();
+  runApp(const MyApp());
+}
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
+      initialRoute: '/',
+        routes: AppRouter.getRoutes(),
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -49,7 +88,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  String _currentUsername='';
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -79,32 +118,17 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+
+          mainAxisAlignment: MainAxisAlignment.start,
+          
+          children: [
+            TextButton(onPressed:(){testConnection('myadressemail@gmail.com', 'azerty1234');},child: Text('Login'),),
+            UsersList(),TimersList()
+
+          ],)
+
         ),
-      ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
@@ -112,4 +136,41 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+  testConnection(String email,String password) async {
+    try {
+      final credential = FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password
+      );
+      setState(() {
+        _currentUsername = FirebaseAuth.instance.currentUser!.email ?? '';
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+  disconnect(){
+    FirebaseAuth.instance.signOut();
+    setState((){
+      _currentUsername='';
+    });
+  }
+
 }
+checkConnection() {
+  FirebaseAuth.instance
+      .authStateChanges()
+      .listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
+}
+
+
