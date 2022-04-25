@@ -1,6 +1,6 @@
-# timer
+# timber
 
-Projet multi-timer
+A new Flutter project.
 
 ## Getting Started
 
