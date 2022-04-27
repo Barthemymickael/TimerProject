@@ -1,11 +1,11 @@
 {
-    "name": "timer",
-    "short_name": "timer",
+    "name": "timber",
+    "short_name": "timber",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Projet multi-timer",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
