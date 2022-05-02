@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:timer/home.dart';
 import 'package:timer/loginscreen.dart';
 
 void main() {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
 
   }
@@ -52,8 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,),
       body: Center(
         child: Container(
-          margin: EdgeInsets.all(360),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          margin: const EdgeInsets.all(360),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: Colors.black, width: 4),
@@ -61,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: DropdownButton<String>(
           value: value,
           iconSize: 36,
-          icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+          icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
           isExpanded: true,
           items: items.map(buildMenuItem).toList(),
           onChanged: (value) => setState(() => this.value = value),
@@ -74,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       value: item,
       child: Text(
         item,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
     );
   }

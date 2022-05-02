@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'pages/dashboard.dart';
@@ -7,6 +6,8 @@ import 'pages/setting.dart';
 import 'pages/profile.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -15,14 +16,14 @@ class _HomeState extends State<Home> {
 
   int currentTab = 0;
   final List<Widget> screens = [
-  Dashboard(),
-    Chat(),
-  Profile(),
-  Setting()
+  const Dashboard(),
+    const Chat(),
+  const Profile(),
+  const Setting()
 ];
 
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = Dashboard();
+  Widget currentScreen = const Dashboard();
 
   @override
   Widget build(BuildContext context){
@@ -32,14 +33,14 @@ class _HomeState extends State<Home> {
         bucket: bucket,
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: ()  {},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 10,
-        child: Container(
+        child: SizedBox(
           height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +52,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Dashboard();
+                        currentScreen = const Dashboard();
                             currentTab = 0;
                       });
                      },
@@ -75,7 +76,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Chat();
+                        currentScreen = const Chat();
                         currentTab = 1;
                       });
                     },
@@ -105,7 +106,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Profile();
+                        currentScreen = const Profile();
                         currentTab = 2;
                       });
                     },
@@ -129,7 +130,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = Setting();
+                        currentScreen = const Setting();
                         currentTab = 3;
                       });
                     },

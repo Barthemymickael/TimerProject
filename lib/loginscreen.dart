@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:timer/home.dart';
+import 'package:timer/registerscreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,8 +13,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   //editing controller
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController emailController =  TextEditingController();
+  final TextEditingController passwordController =  TextEditingController();
 
 @override
   Widget build(BuildContext context) {
@@ -27,8 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     textInputAction: TextInputAction.next,
     decoration: InputDecoration(
-      prefixIcon:  Icon(Icons.mail),
-      contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+      prefixIcon:  const Icon(Icons.mail),
+      contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
       hintText: "Email",
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -48,8 +50,8 @@ class _LoginScreenState extends State<LoginScreen> {
     },
     textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-        prefixIcon:  Icon(Icons.vpn_key),
-        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        prefixIcon:  const Icon(Icons.vpn_key),
+        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: "Mot de passe",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -60,11 +62,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final loginButton = Material(
     elevation: 5,
     borderRadius: BorderRadius.circular(30),
-    color: Colors.redAccent,
+    color: Colors.greenAccent,
     child: MaterialButton(
       padding:  const EdgeInsets.fromLTRB(20, 15, 20, 15),
       minWidth: MediaQuery.of(context).size.width,
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const Home()));
+      },
       child: const Text(
         "Se connecter",
         textAlign: TextAlign.center,
@@ -91,12 +96,37 @@ return Scaffold(
             SizedBox(
               height: 200,
               child: Image.asset(
-                "assets/logo.jpg",
+                'assets/logo.jpg',
                 fit: BoxFit.contain,
               )),
+            const SizedBox(height: 25),
             emailField,
+            const SizedBox(height: 25),
             passwordField,
-            loginButton
+            const SizedBox(height: 25),
+            loginButton,
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text("Vous n'avez pas de compte ? "),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                        const RegisterScreen()));
+                  },
+                  child: const Text(
+                    "S'inscire ici",
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15),
+                ),
+                )
+              ])
           ],
         ),
         ),
