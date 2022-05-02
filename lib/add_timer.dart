@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:intl/intl.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({Key? key}) : super(key: key);
@@ -137,11 +137,17 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
                 children:[
                   const Text('Date de fin:'),
                   Expanded(
+                    /*child: Text(
+
+
+                     // DateFormat(' dd/MM/yyyy Time : KK:mm:ss').format(DateTime.now()),
+
+                    ),*/
                     child: TextField(
-                      decoration: const InputDecoration (
+                           decoration: const InputDecoration (
                         border: InputBorder.none,
                       ),
-                      controller: dateController,
+                    controller: dateController,
                     ),
                   ),
                 ],
@@ -156,7 +162,7 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
                   FirebaseFirestore.instance.collection('Timer').add({
                     'name': nameController.value.text,
                     'description': descriptionController.value.text,
-                    'DateTime': dateController.value.text,
+                    'DateTime': DateFormat(' KK:mm:ss').format(DateTime.now()),
                     'duree': dureeController.value.text,
                     'ordre': ordreController.value.text,
                     'visible': true,
