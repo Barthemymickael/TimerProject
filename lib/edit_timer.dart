@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:timber/main.dart';
-
+/*
 class editTimer extends StatefulWidget {
   DocumentSnapshot docid;
   editTimer({required this.docid});
@@ -26,6 +26,7 @@ class _editTimerState extends State<editTimer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Modifier un timer'),
         actions: [
           MaterialButton(
             onPressed: () {
@@ -50,7 +51,57 @@ class _editTimerState extends State<editTimer> {
           ),
         ],
       ),
-      body: Container(
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+            children: [
+        ListTile(
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(4),
+        side:const BorderSide(color: Colors.white30, width: 1.5),
+      ),
+
+      title:Row(
+        children:[
+          const Text('Nom:'),
+          Expanded(
+            child: TextField(
+              controller: title,
+              decoration: InputDecoration(
+                hintText: 'title',
+              ),
+            ),
+          ),
+        ],
+      ),
+
+    ),
+    const SizedBox(height:20),
+              ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  side:const BorderSide(color: Colors.white30, width: 1.5),
+                ),
+
+                title:Row(
+                  children:[
+                    const Text('Nom:'),
+                    Expanded(
+                      child: TextField(
+                        controller: content,
+                        expands: true,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          hintText: 'content',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+              ),
+              const SizedBox(height:20),
+    /*body: Container(
         child: Column(
           children: [
             Container(
@@ -77,10 +128,11 @@ class _editTimerState extends State<editTimer> {
                   ),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),
     );
   }
 }
+*/

@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:timber/edit_timer.dart';
+import 'package:timber/edit_timer2.dart';
 import 'add_timer.dart';
 //import 'package:firebase_database/firebase_database.dart';
 //Vidéo TUTO Trés important a reprendre ! : https://www.youtube.com/watch?v=dauYyOXsogw
@@ -29,6 +29,7 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({Key? key}) : super(key:key);
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,10 @@ class TimerInfo extends StatefulWidget {
   @override
   _TimerInfoState createState() => _TimerInfoState();
 }
+
+
 class _TimerInfoState extends State<TimerInfo> {
+
 final Stream<QuerySnapshot> _timerStream =
     FirebaseFirestore.instance.collection('Timer').snapshots(includeMetadataChanges: true);
   @override
@@ -96,74 +100,63 @@ final Stream<QuerySnapshot> _timerStream =
               padding: const EdgeInsets.all(10),
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 100,
+
+                  MaterialButton(
+
                     child: Text('Slot'),
+
+                    onPressed: () {
+                      //log('index: itemBuilder');
+                      /*itemCount: snapshot.data!.docs.length,
+
+                      itemBuilder: (_, index) {
+                      /*itemBuilder: (_, index) {
+                      Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (_) => editTimer(docid: snapshot.data!.docs[index])));*/
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                      return editTimer(docid: snapshot.data!.docs[index]);
+
+                      },
+
+                        fullscreenDialog: true,
+
+
+                      ));*/
+                     // log('index: fd');
+                ListView.builder(
+
+                itemCount: snapshot.data!.docs.length,
+
+                itemBuilder: (_, index) {
+                  log('index: fdhlj');
+                  log('index: $index');
+                  return GestureDetector(
+                    onTap: () {
+
+                              //editTimer(docid: snapshot.data!.docs[index]),
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                      return editTimer(docid: snapshot.data!.docs[index]);
+                      },
+                        fullscreenDialog: true,
+                        ),
+                      );
+                    });
+
+
+            });
+            },
                   ),
+
 
                   Padding(
 
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: ListView.builder(
-                      itemCount: 0/*snapshot.data!.docs.length*/,
-                      itemBuilder: (_, index) {
-                        return GestureDetector(/*
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    editTimer(docid: snapshot.data!.docs[index]),
-                              ),
-                            );
-                          },*/
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 3,
-                                  right: 3,
-                                ),
-                                child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    side: BorderSide(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  title: Text(''/*
-                                    snapshot.data!.docChanges[index].doc['name'],
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                  */),
-                                  subtitle: Text(''/*
-                                    snapshot.data!.docChanges[index].doc['description'],
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                    ),
-                                  */),
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: 12,
-                                    horizontal: 16,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                            /*child: Column(
+
+                            child: Column(
 
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                              /*  Text(
+                               Text(
                                   Timer['name'],
                                   style: const TextStyle (
                                       fontSize: 18,
@@ -171,20 +164,23 @@ final Stream<QuerySnapshot> _timerStream =
 
                                 ),
                                 const Text('Description'),
-                                Text(''/*Timer['description'].toString()*/),
-                               /* const Text('Heure de fin'),
-                                Text(Timer['DateTime'].toString()),*/*/
+                                Text(Timer['description'].toString()),
+                                const Text('Heure de fin'),
+                                Text(Timer['DateTime'].toString()),
                               ],
-                            ),*/
-                        /*  );
-                        },
-                    ),
-                  ),
-                ],*/
-              ],
+                            ),
 
-              ),
+            ),
+
+            ],
+            ),
             );
+
+
+
+
+
+
           }).toList(),
     );
 
