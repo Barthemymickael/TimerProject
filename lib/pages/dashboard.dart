@@ -13,7 +13,7 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: AppBar(title: const Text('Dashboard')),
       body: const Center(
-        child: Text('Dashboard Screen', style: TextStyle(fontSize: 40)),
+        child: Text('Accueil', style: TextStyle(fontSize: 40)),
       ),
     );
   }

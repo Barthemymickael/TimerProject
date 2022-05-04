@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timer/loginscreen.dart';
 
-void main() {
+
+ void main() {
   runApp(const MyApp());
 }
 
