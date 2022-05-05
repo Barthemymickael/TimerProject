@@ -1,9 +1,12 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'add_timer.dart';
 import 'pages/dashboard.dart';
 import 'pages/chat.dart';
 import 'pages/setting.dart';
 import 'pages/profile.dart';
+import 'main.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -34,8 +37,16 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: ()  {},
-      ),
+        onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+            return const AddPage();
+          },
+            fullscreenDialog: true,
+
+
+          ));
+
+        },),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
