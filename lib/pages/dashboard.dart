@@ -13,11 +13,24 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final Stream<QuerySnapshot> _timerStream = // appelle la BDD
   FirebaseFirestore.instance.collection('Timer').snapshots(includeMetadataChanges: true);
-
+  bool switchValue = false;
+  bool isVisible = true;
   @override
   Widget build(BuildContext context) { //Début de construction de la page d'affichage
     return Scaffold(
-      appBar: AppBar(title: const Text('Timer ')), //Bandeau qui s'afffiche pas...?
+      appBar: AppBar(title: const Text('Timer '), //Bandeau qui s'afffiche pas...?
+
+        leading: Switch(
+        value: switchValue,
+        onChanged: (value) {
+          switchValue = value;
+          isVisible = !isVisible;
+          setState(() {
+
+          });
+        },
+      ),
+    ),
       body: StreamBuilder(
         stream: _timerStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -34,6 +47,8 @@ class _DashboardState extends State<Dashboard> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
             ),
+
+
             child: ListView.builder(//Commande qui permet d'éditer l'élément en cliquant dessus
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (_, index) {
@@ -49,6 +64,7 @@ class _DashboardState extends State<Dashboard> {
                   },
                   child: Column(
                     children: [
+
                       SizedBox(
                         height: 4,
                       ),
@@ -57,6 +73,8 @@ class _DashboardState extends State<Dashboard> {
                           left: 3,
                           right: 3,
                         ),
+                        child: Visibility(
+                          visible: isVisible,
                         child: ListTile(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -80,6 +98,8 @@ class _DashboardState extends State<Dashboard> {
                             vertical: 12,
                             horizontal: 16,
                           ),
+                        ),
+
                         ),
                       ),
                     ],

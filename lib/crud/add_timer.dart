@@ -11,6 +11,7 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  final docTimer = FirebaseFirestore.instance.collection('Timer').doc();
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final dureeController = TextEditingController();
@@ -159,7 +160,10 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
                   minimumSize: const Size.fromHeight(50),
                 ),
                 onPressed: (){
+
                   FirebaseFirestore.instance.collection('Timer').add({
+
+                    'id': docTimer.id.toString(),
                     'name': nameController.value.text,
                     'description': descriptionController.value.text,
                     'DateTime': DateFormat(' KK:mm:ss').format(DateTime.now()),
