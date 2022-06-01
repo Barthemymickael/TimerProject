@@ -121,7 +121,7 @@ class _TempsState extends State<Temps> {
 
     // Bouton démarrrer
         : ButtonWidget(
-      text: 'Start!',
+      text: 'Start',
       color: Colors.black,
       backgroundColor: Colors.white,
       onClicked: () {
