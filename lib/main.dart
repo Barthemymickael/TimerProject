@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:timer/loginscreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'home.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  const config = FirebaseOptions(
+      apiKey: "AIzaSyA5zCsKzRsmJoFwWW0XJ_oUTOPe9ZQRKTM",
+      appId: "1:388890135059:web:17df6f5af959cbadd04de6",
+      messagingSenderId: "388890135059",
+      projectId: "test-22f99"
+  );
 
 
- void main() {
+  await Firebase.initializeApp(options: config);
   runApp(const MyApp());
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+
 }
 
 class MyApp extends StatelessWidget {
