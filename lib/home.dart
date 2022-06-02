@@ -1,9 +1,12 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'crud/add_timer.dart';
 import 'pages/dashboard.dart';
-import 'pages/chat.dart';
+import 'pages/timer.dart';
 import 'pages/setting.dart';
 import 'pages/profile.dart';
+import 'main.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class _HomeState extends State<Home> {
   int currentTab = 0;
   final List<Widget> screens = [
   const Dashboard(),
-    const Chat(),
+     const Temps(),
   const Profile(),
   const Setting()
 ];
@@ -34,8 +37,16 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: ()  {},
-      ),
+        onPressed: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+            return const AddPage();
+          },
+            fullscreenDialog: true,
+
+
+          ));
+
+        },),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
@@ -76,7 +87,7 @@ class _HomeState extends State<Home> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen = const Chat();
+                        currentScreen = const Temps();
                         currentTab = 1;
                       });
                     },
@@ -84,11 +95,11 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.chat,
+                          Icons.timer,
                           color: currentTab == 1 ? Colors.blue : Colors.blue,
                         ),
                         Text(
-                          'Chat',
+                          'Timer',
                           style: TextStyle(
                               color: currentTab == 1 ? Colors.blue : Colors.grey
                           ),
