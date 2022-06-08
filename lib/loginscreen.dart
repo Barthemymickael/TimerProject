@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:timer/home.dart';
+import 'package:timer/authentification.dart';
 import 'package:timer/registerscreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,7 +17,38 @@ class _LoginScreenState extends State<LoginScreen> {
   //editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final _auth = FirebaseAuth.instance;
+  String email = '';
+  String password = '';
 
+  static connect(String email,String password,BuildContext context) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email,
+          password: password
+      );
+      //User is ok, so log in
+      AuthenticationProvider.of(context)?.login(credential.user);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('Sucessfully login as ' + email),
+          ),
+          duration: Duration(seconds: 5),
+        ),
+      );
+      Navigator.of(context).pushNamed('/Dashboard');
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
 
 
   @override
@@ -89,6 +122,10 @@ class _LoginScreenState extends State<LoginScreen> {
               .size
               .width,
           onPressed: () {
+
+            connect(emailController.value.text, passwordController.value.text, context);
+
+
             Navigator.pushReplacement(
                 context, MaterialPageRoute (builder: (context) => const Home()));
           },

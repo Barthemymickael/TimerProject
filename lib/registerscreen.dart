@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -18,6 +19,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
 
+  final _auth = FirebaseAuth.instance;
+  String email = '';
+  String password = '';
+
+  static register(final _auth, String email,String password,BuildContext context) async {
+    _auth.createUserWithEmailAndPassword(email: email, password: password);
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context){
@@ -128,13 +137,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
           padding:  const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
+
+            register ( _auth, emailEditingController.value.text,confirmPasswordEditingController.value.text, context );
+
+            /*
                       FirebaseFirestore.instance.collection('User').add({ //champs a ajouté a la BDD User est le nom donner a la BDD qui va stocker les informations
               'Prénom'/* nom du champs dans la table user*/: prenomEditingController.value.text,//Nom du controller ainsi que le type de champs que c'est
               'Nom': nomEditingController.value.text,
               'MDP': confirmPasswordEditingController.value.text,
               'Email': emailEditingController.value.text,
-                      });
-                      Navigator.pop(context); //c'est la qu'il faut mettre ou es ce qu'il sera rediriger a l'inscription
+                      });*/
+                       //c'est la qu'il faut mettre ou es ce qu'il sera rediriger a l'inscription
                                               // par défaut ca renvoi a la page de  connexion
                       },
           child: const Text(

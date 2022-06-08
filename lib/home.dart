@@ -153,7 +153,7 @@ class _HomeState extends State<Home> {
                           color: currentTab == 3 ? Colors.blue : Colors.blue,
                         ),
                         Text(
-                          'Setting',
+                          'Groupe',
                           style: TextStyle(
                               color: currentTab == 3 ? Colors.blue : Colors.grey
                           ),

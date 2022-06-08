@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +12,11 @@ class AddPage extends StatefulWidget {
 
 class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  showMessage() {
+    final userAuth = FirebaseAuth.instance.currentUser?.uid;
+    String userAuthString = userAuth.toString();
+    return userAuthString;
+  }
   final docTimer = FirebaseFirestore.instance.collection('Timer').doc();
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -162,7 +168,7 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
                 onPressed: (){
 
                   FirebaseFirestore.instance.collection('Timer').add({
-
+                    'UserID': showMessage(),
                     'id': docTimer.id.toString(),
                     'name': nameController.value.text,
                     'description': descriptionController.value.text,

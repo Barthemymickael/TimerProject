@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../crud/edit_timer.dart';
@@ -11,11 +12,22 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+/*
+  firebase.auth().currentUser ;// pour récup l'objet
+  firebase.auth().currentUser.uid ; // pour l'id
+*/
+
   final Stream<QuerySnapshot> _timerStream = // appelle la BDD
   FirebaseFirestore.instance.collection('Timer').snapshots(includeMetadataChanges: true);
   bool switchValue = false;
   bool isVisible = true;
+  showMessage() {
+    final userAuth = FirebaseAuth.instance.currentUser?.uid;
+    String userAuthString = userAuth.toString();
+    return userAuthString;
+  }
   @override
+
   Widget build(BuildContext context) { //Début de construction de la page d'affichage
     return Scaffold(
       appBar: AppBar(title: const Text('Timer '), //Bandeau qui s'afffiche pas...?
@@ -50,8 +62,9 @@ class _DashboardState extends State<Dashboard> {
 
 
             child: ListView.builder(//Commande qui permet d'éditer l'élément en cliquant dessus
-              itemCount: snapshot.data!.docs.length,
+              itemCount: snapshot.data?.docs.length,
               itemBuilder: (_, index) {
+                if ( snapshot.data?.docChanges[index].doc['UserID'] == showMessage() ){
                 return GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(
@@ -105,11 +118,21 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 );
-              },
-            ),
-          );
+
+
+
+          }
+
+          else {
+                  return const Text("Vous n'avez pas de timer");
+          }
+
         },
+
       ),
+
     );
-  }
-}
+
+  }));
+
+}}

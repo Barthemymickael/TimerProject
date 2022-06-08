@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../loginscreen.dart';
@@ -10,7 +11,15 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+   showMessage() {
+    final userAuth = FirebaseAuth.instance.currentUser?.uid;
+    String userAuthString = userAuth.toString();
+    return Text(userAuthString);
+  }
+ // final mail = showMessage();
   @override
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Profile')),
@@ -28,11 +37,12 @@ class _ProfileState extends State<Profile> {
               const Text("Bienvenue", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10,),
-              const Text("Name",
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w500,
-                )),
+              const Text("Id :",
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w500,
+                  )),
+               showMessage(),
               const Text("Email",
                   style: TextStyle(
                     color: Colors.black54,
